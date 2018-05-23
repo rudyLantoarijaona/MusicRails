@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @user.name %>
+</p>
+
+<p>
+  <strong>Artist:</strong>
+  <%= @user.artist %>
+</p>
+
+<p>
+  <strong>Password:</strong>
+  <%= @user.password %>
+</p>
+
+<p>
+  <strong>Bestscore:</strong>
+  <%= @user.bestScore %>
+</p>
+
+<p>
+  <strong>Lastscore:</strong>
+  <%= @user.lastScore %>
+</p>
+
+<%= link_to 'Modifier', edit_user_path(@user) %> |
+<%= link_to 'Retour', users_path %>
