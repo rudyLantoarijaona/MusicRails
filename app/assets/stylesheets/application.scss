@@ -1,2 +1,18 @@
 @import 'bootstrap-sprockets';
-@import 'bootstrap'
+@import 'bootstrap';
+
+.songItem, .songDesc {
+  display: flex;
+}
+
+.songDesc {
+  flex-direction: column;
+}
+
+.songCover {
+  margin-right: 20px;
+}
+
+.songLyrics {
+  white-space: pre-wrap;
+}
