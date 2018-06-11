@@ -1,0 +1,57 @@
+<h1>
+  Ceci est la page d'accueil du projet
+  <%= Rails.application.class.parent_name %> !
+</h1>
+
+<div>
+  <% if !@track %>
+
+    <%= form_tag("/api", method: "get") do %>
+    <div class="form-group">
+      <%= label_tag(:q, "Find an artist :") %>
+      <%= text_field_tag(:q, @query, class: "form-control") %>
+      <%= submit_tag("Find", class: "btn btn-primary") %>
+    </div>
+    <% end %>
+
+    <% if @songs && @songs.length>0 %>
+
+      <ul class="list-group">
+        <% @songs.each do |song| %>
+          <li class="list-group-item">
+            <a href="/api?trackId=<%=song[3]%>">
+              <div class="songItem">
+                <img src="<%= song[2] %>" alt="songCover" class="songCover">
+                <div class="songDesc">
+                  <h3><%= song[0] %></h3>
+                  <h4><%= song[1] %></h4>
+                </div>
+              </div>
+            </a>
+          </li>
+        <% end %>
+      </ul>
+    <% elsif @query != "" %>
+      No results for <strong><%= @query %></strong>
+    <% else %>
+      Start by finding an artist
+    <% end %>
+
+  <% else %>
+    <a href="/api">
+      <button type="button" name="button" class="btn btn-info">Back</button>
+    </a>
+    <p class="songLyrics">
+      <div class="songItem">
+        <img src="<%= @track[3] %>" alt="songCover" class="songCover">
+        <div class="songDesc">
+          <h2><%= @track[1] %></h2>
+          <h3><%= @track[2] %></h3>
+        </div>
+      </div>
+      <p class="songLyrics">
+        <%= @track[0] %>
+      </p>
+    </p>
+  <% end %>
+</div>
