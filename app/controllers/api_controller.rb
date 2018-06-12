@@ -6,11 +6,16 @@ class ApiController < ApplicationController
 
       lyrics = getLyricsgById(params[:trackId])
       track = getTrackById(params[:trackId])
+
+      resultTrim = trimLyrics(lyrics["lyrics_body"], 3);
+
       trackContent = Array.new
-      trackContent.push(lyrics["lyrics_body"])
+
+      trackContent.push(resultTrim[0])
       trackContent.push(track["track_name"])
       trackContent.push(track["artist_name"])
       trackContent.push(track["album_coverart_100x100"])
+      trackContent.push(resultTrim[1])
       @track = trackContent
 
     else
@@ -64,5 +69,32 @@ class ApiController < ApplicationController
     url = endPointUrl + 'track.get?apikey=03d5f80e88e40ca17ea9d78f326c84ee&track_id=' + idTrack;
     response = HTTParty.get(url)
     return JSON.parse(response.parsed_response)["message"]["body"]["track"]
+  end
+
+  def trimLyrics(lyrics, level)
+
+    lyrics_line = lyrics.split("\n")
+    i = 0
+    lyrics_line.each do | line |
+      lyrics_line[i] = line+"<br>"
+      i = i+1
+    end
+    lyrics = lyrics_line.join(" ")
+    lyrics_word = lyrics.split(" ")
+    valid_words = Array.new
+
+    while level > 0 do
+       rand = rand(lyrics_word.length)
+           puts lyrics_word[rand]
+       valid_words.push(lyrics_word[rand])
+       lyrics_word[rand] = "<input type='text' style='display: inline'></input>"
+       level -= 1
+    end
+
+    result = Array.new
+    result.push(lyrics_word.join(" ").html_safe, valid_words)
+
+    return result
+    
   end
 end
