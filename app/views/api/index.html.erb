@@ -1,9 +1,9 @@
-<h1>
-  Ceci est la page d'accueil du projet
-  <%= Rails.application.class.parent_name %> !
-</h1>
-
 <div>
+  
+  <% if @recap %>
+  <div>TESTTEST</div>
+  <% end %>
+  
   <% if !@track %>
 
     <%= form_tag("/api", method: "get") do %>
@@ -41,17 +41,27 @@
     <a href="/api">
       <button type="button" name="button" class="btn btn-info">Back</button>
     </a>
-    <p class="songLyrics">
-      <div class="songItem">
-        <img src="<%= @track[3] %>" alt="songCover" class="songCover">
-        <div class="songDesc">
-          <h2><%= @track[1] %></h2>
-          <h3><%= @track[2] %></h3>
-        </div>
-      </div>
+    <%= form_tag(controller: "api", action: "index", method: "post") do |f| %>
+      <%= hidden_field_tag("difficulty", @track[5]) %>
+      <%= hidden_field_tag("track_id", @track[6]) %>
+      <% i = 1 %>
+      <% @track[4].map do |m| %>
+        <%= hidden_field_tag("response"+i.to_s, m) %>
+        <% i += 1 %>
+      <% end %>
       <p class="songLyrics">
-        <%= @track[0] %>
+        <div class="songItem">
+          <img src="<%= @track[3] %>" alt="songCover" class="songCover">
+          <div class="songDesc">
+            <h2><%= @track[1] %></h2>
+            <h3><%= @track[2] %></h3>
+          </div>
+        </div>
+        <p class="songLyrics">
+          <%= @track[0] %>
+        </p>
       </p>
-    </p>
+      <%= submit_tag("Confirmer") %>
+    <% end %>
   <% end %>
 </div>

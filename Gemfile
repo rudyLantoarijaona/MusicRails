@@ -7,6 +7,7 @@ ruby '2.3.3'
 gem 'jquery-rails'
 gem 'bootstrap-sass'
 gem 'httparty'
+gem 'simple_form'
 gem 'devise'
 gem 'devise-i18n'
 
