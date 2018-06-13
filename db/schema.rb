@@ -12,17 +12,12 @@
 
 ActiveRecord::Schema.define(version: 2018_06_13_154248) do
 
-  create_table "songs", force: :cascade do |t|
-    t.string "name"
-    t.string "artist"
-    t.integer "count"
-  end
-
   create_table "stats", force: :cascade do |t|
     t.integer "nbPartyPlay"
     t.integer "nbPartyWin"
     t.integer "scoreNow"
     t.integer "scoreRecord"
+    t.integer "idUser"
     t.string "lastSong"
     t.string "lastAnswer"
     t.string "lastResponse"
