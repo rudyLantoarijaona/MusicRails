@@ -60,9 +60,69 @@ class ApiController < ApplicationController
       else
         points = -20 + (params[:difficulty].to_i - 3) * 2
       end
-      recap = Array.new
-      recap.push(points)
-      recap.push(params)
+
+      #lastAnswer lastResponse
+      i = 1
+      lastAnswer = ""
+      lastResponse = ""
+      while i <= params[:difficulty].to_i do
+        lastAnswer << params["answer"+i.to_s]+" / "
+        lastResponse << params["response"+i.to_s]+" / "
+        i += 1
+      end
+
+      user = current_user
+      if (s = Stat.find_by(idUser: user.id))
+        if s.scoreRecord + points > s.scoreRecord
+          record = s.scoreRecord + points
+        else
+          record = s.scoreRecord
+        end
+        if points > 0
+          s.update({:idUser => user.id, 
+                    :nbPartyPlay => s.nbPartyPlay + 1, 
+                    :nbPartyWin => s.nbPartyWin + 1, 
+                    :scoreNow => s.scoreNow + points,
+                    :scoreRecord => record,
+                    :lastSong => params["track_id"],
+                    :lastAnswer => lastAnswer,
+                    :lastResponse => lastResponse,
+                    :lastPoints => points})
+        else
+          s.update({:idUser => user.id, 
+                    :nbPartyPlay => s.nbPartyPlay + 1, 
+                    :nbPartyWin => s.nbPartyWin, 
+                    :scoreNow => s.scoreNow + points,
+                    :scoreRecord => record,
+                    :lastSong => params["track_id"],
+                    :lastAnswer => lastAnswer,
+                    :lastResponse => lastResponse,
+                    :lastPoints => points})
+        end
+      else
+        if points > 0
+          Stat.create({:idUser => user.id, 
+                       :nbPartyPlay => 1, 
+                       :nbPartyWin => 1, 
+                       :scoreNow => points,
+                       :scoreRecord => points,
+                       :lastAnswer => lastAnswer,
+                       :lastResponse => lastResponse,
+                       :lastSong => params["track_id"],
+                       :lastPoints => points})
+        else
+          Stat.create({:idUser => user.id, 
+                       :nbPartyPlay => 1, 
+                       :nbPartyWin => 1, 
+                       :scoreNow => points,
+                       :scoreRecord => 0,
+                       :lastAnswer => lastAnswer,
+                       :lastResponse => lastResponse,
+                       :lastSong => params["track_id"],
+                       :lastPoints => points})
+        end
+      end
+      #redirect_to controller: 'stats', action: 'create', id: 1
     end
   end
 
