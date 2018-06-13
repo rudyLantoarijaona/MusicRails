@@ -17,10 +17,6 @@
   white-space: pre-wrap;
 }
 
-h1{
-	text-align : center;
-}
-
 body html{
 	margin: 0;
 	padding: 0;
@@ -38,24 +34,20 @@ background-size: cover;
 background-position: center center;
 background-repeat: no-repeat;
 /* top :0; */
- position: fixed; 
- left: 0; 
+ position: fixed;
+ left: 0;
  right:0;
  min-width: 100%;
  min-height: 100%;
 }
 
+.navbar-nav {
+  display: flex;
+  align-items: center;
+}
 .navbar-inverse .navbar-nav > li > a {
     margin-right: 30px;
     color:white;
-}
-
-label{
-	color: white;
-}
-
-a{
-	color:white;
 }
 
 label_tag{

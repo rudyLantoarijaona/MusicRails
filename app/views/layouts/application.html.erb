@@ -22,17 +22,22 @@
           <div class="navbar-header">
             <a href="" class="navbar-brand">MusicRails</a>
           </div>
-       
+
           <ul class="navbar navbar-nav navbar-right">
-            <li><a href="">Home</a></li>
-            <li><a href="">Registration</a></li>
-            <li><a href="">Login</a> </li>
+            <li><%= link_to 'Home', root_path %></li>
+            <% if user_signed_in? %>
+              <li><%= link_to 'Se déconnecter (' + current_user.email + ')', destroy_user_session_path, method: :delete %></li>
+            <% else %>
+              <li><%= link_to 'Se connecter', new_user_session_path %></li>
+              <li><%= link_to 'S\'inscrire', new_user_registration_path %></li>
+            <% end %>
           </ul>
         </div>
-       
+
       </div>
     </nav>
     <div class="container">
+
       <%= yield %>
     </div>
   </body>
