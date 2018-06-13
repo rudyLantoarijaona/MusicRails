@@ -2,6 +2,10 @@ class ApiController < ApplicationController
 
   def index
 
+    if params[:answer1]
+      puts "TEST"
+    end
+
     if params[:trackId]
 
       lyrics = getLyricsgById(params[:trackId])
@@ -16,6 +20,9 @@ class ApiController < ApplicationController
       trackContent.push(track["artist_name"])
       trackContent.push(track["album_coverart_100x100"])
       trackContent.push(resultTrim[1])
+      # difficulty
+      trackContent.push("3")
+      trackContent.push(params[:trackId])
       @track = trackContent
 
     else
@@ -35,6 +42,27 @@ class ApiController < ApplicationController
       @songs = showSongs
       @query = params[:q] || ""
 
+    end
+  end
+
+  def create
+    if params[:difficulty]
+      i = 1
+      valid = true
+      while i <= params[:difficulty].to_i do
+        if(params["answer"+i.to_s] != params["response"+i.to_s])
+          valid = false
+        end
+        i += 1
+      end
+      if valid
+        points = 20 + (params[:difficulty].to_i - 3) * 2
+      else
+        points = -20 + (params[:difficulty].to_i - 3) * 2
+      end
+      recap = Array.new
+      recap.push(points)
+      recap.push(params)
     end
   end
 
@@ -77,18 +105,20 @@ class ApiController < ApplicationController
     i = 0
     lyrics_line.each do | line |
       lyrics_line[i] = line+"<br>"
-      i = i+1
+      i += 1
     end
     lyrics = lyrics_line.join(" ")
     lyrics_word = lyrics.split(" ")
     valid_words = Array.new
 
+    i = 1
     while level > 0 do
        rand = rand(lyrics_word.length)
            puts lyrics_word[rand]
        valid_words.push(lyrics_word[rand])
-       lyrics_word[rand] = "<input type='text' style='display: inline'></input>"
+       lyrics_word[rand] = "<input type='text' style='display: inline' name='answer"+i.to_s+"'></input>"
        level -= 1
+       i += 1
     end
 
     result = Array.new
