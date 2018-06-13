@@ -1,9 +1,7 @@
 class User < ApplicationRecord
-  scope :short_name, ->{where('lenght(name) < 10')}
-  
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :trackable, :validatable
 
-  def explicit_name
-      "user '#{name}'"
-  end
-  
 end
