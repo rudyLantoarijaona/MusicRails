@@ -63,6 +63,7 @@ class ApiController < ApplicationController
       recap = Array.new
       recap.push(points)
       recap.push(params)
+      redirect_to controller: 'stats', action: 'create', id: 3, recap: recap
     end
   end
 

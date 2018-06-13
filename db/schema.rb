@@ -23,7 +23,6 @@ ActiveRecord::Schema.define(version: 2018_06_13_154248) do
     t.integer "nbPartyWin"
     t.integer "scoreNow"
     t.integer "scoreRecord"
-    t.integer "idUser"
     t.string "lastSong"
     t.string "lastAnswer"
     t.string "lastResponse"
