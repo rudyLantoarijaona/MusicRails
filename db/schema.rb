@@ -10,20 +10,36 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_22_102832) do
+ActiveRecord::Schema.define(version: 2018_06_13_154248) do
 
-  create_table "songs", force: :cascade do |t|
-    t.string "name"
-    t.string "artist"
-    t.integer "count"
+  create_table "stats", force: :cascade do |t|
+    t.integer "nbPartyPlay"
+    t.integer "nbPartyWin"
+    t.integer "scoreNow"
+    t.integer "scoreRecord"
+    t.integer "idUser"
+    t.string "lastSong"
+    t.string "lastAnswer"
+    t.string "lastResponse"
+    t.string "lastPoints"
   end
 
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "mail"
     t.string "password"
-    t.integer "bestScore"
-    t.integer "lastScore"
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer "sign_in_count", default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string "current_sign_in_ip"
+    t.string "last_sign_in_ip"
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
 end
