@@ -5,14 +5,23 @@
   <% end %>
 
   <% if !@track %>
+  <div class="jumbotron">
 
-    <%= form_tag("/api", method: "get") do %>
-    <div class="form-group">
-      <%= label_tag(:q, "Find an artist :") %>
-      <%= text_field_tag(:q, @query, class: "form-control") %>
-      <%= submit_tag("Find", class: "btn btn-primary") %>
+      <%= form_tag("/api", method: "get") do %>
+        <div class="form-group">
+          <%= label_tag(:q, "Recherchez un artiste pour commencer à jouer (Vous devez être connecté) :") %>
+          <%= text_field_tag(:q, "", class: "form-control") %>
+        </div>
+        <div class="form-group">
+          <% if user_signed_in? %>
+            <%= submit_tag("Chercher", class: "btn btn-primary btn-lg") %>
+          <% else %>
+            <%= link_to 'Chercher', new_user_session_path, class: "btn btn-primary btn-lg" %>
+          <% end %>
+        </div>
+      <% end %>
+
     </div>
-    <% end %>
 
     <% if @songs && @songs.length>0 %>
 
@@ -32,14 +41,18 @@
         <% end %>
       </ul>
     <% elsif @query != "" %>
-      No results for <strong><%= @query %></strong>
+      <div class="alert alert-danger" role="alert">
+        Désolé, aucun résultats pour <strong><%= @query %></strong> !
+      <div>
     <% else %>
-      Start by finding an artist
+      <div class="alert alert-warning" role="alert">
+        Renseignez un artiste
+      </div>
     <% end %>
 
   <% else %>
     <a href="/api">
-      <button type="button" name="button" class="btn btn-info">Back</button>
+      <button type="button" name="button" class="btn btn-info">Retour</button>
     </a>
     <%= form_tag(controller: "api", action: "index", method: "post") do |f| %>
       <%= hidden_field_tag("difficulty", @track[5]) %>
@@ -61,7 +74,7 @@
           <%= @track[0] %>
         </p>
       </p>
-      <%= submit_tag("Confirmer") %>
+      <%= submit_tag("Confirmer", class: "btn btn-primary btn-lg") %>
     <% end %>
   <% end %>
 </div>

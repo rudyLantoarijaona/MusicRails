@@ -3,21 +3,25 @@
   <%= Rails.application.class.parent_name %>
 </h1>
 
+<div class="jumbotron">
+
   <%= form_tag("/api", method: "get") do %>
   <div class="form-group">
-    <%= label_tag(:q, "Recherchez un artiste pour commencer à jouer :") %>
+    <%= label_tag(:q, "Recherchez un artiste pour commencer à jouer (Vous devez être connecté) :") %>
     <%= text_field_tag(:q, "", class: "form-control") %>
   </div>
   <div class="form-group">
     <% if user_signed_in? %>
-      <%= submit_tag("Chercher", class: "btn btn-primary") %>
+      <%= submit_tag("Chercher", class: "btn btn-primary btn-lg") %>
     <% else %>
-      <%= link_to 'Find', new_user_session_path, class: "btn btn-primary" %>
+      <%= link_to 'Chercher', new_user_session_path, class: "btn btn-primary btn-lg" %>
     <% end %>
   </div>
   <% end %>
 
+</div>
 
+<h2>Classements</h2>
 <table class="table">
     <thread>
       <tr>
