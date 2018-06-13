@@ -1,17 +1,42 @@
-<h1>
+<!-- <h1>
   Ceci est la page d'accueil du projet
   <%= Rails.application.class.parent_name %> !
-</h1>
+</h1> -->
+
+
+
+<div class="header">
+  <h1>Pour commencer le jeu selectionner un artist</h1>
+</div>
+
+
+
+
+ 
 
 <div>
   <% if !@track %>
 
     <%= form_tag("/api", method: "get") do %>
-    <div class="form-group">
+
+  <!--    <div class="row">
+    <div class="col-md-4 col-sm-4 col-xs-12" ></div>
+    <div class="col-md-4 col-sm-4 col-xs-12" >
+      <form class="register">
+        <div class="form-group">
+          <%= label(:subject, :User) %>
+          <%= text_field(:q, @query, class: "form-control") %>
+          <%= submit_tag("Find", class: "btn btn-primary btn-block") %>
+        </div>
+      </form>
+    </div>
+  </div> -->
+       <div class="form-group">
       <%= label_tag(:q, "Find an artist :") %>
       <%= text_field_tag(:q, @query, class: "form-control") %>
       <%= submit_tag("Find", class: "btn btn-primary") %>
     </div>
+   
     <% end %>
 
     <% if @songs && @songs.length>0 %>
@@ -39,7 +64,7 @@
 
   <% else %>
     <a href="/api">
-      <button type="button" name="button" class="btn btn-info">Back</button>
+      <button type="button" name="button" class="btn btn-info"> </button>
     </a>
     <p class="songLyrics">
       <div class="songItem">
