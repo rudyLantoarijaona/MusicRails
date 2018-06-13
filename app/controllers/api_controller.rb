@@ -1,5 +1,5 @@
 class ApiController < ApplicationController
-
+  before_action :authenticate_user!, only: %i[index]
   def index
 
     if params[:answer1]
@@ -185,6 +185,6 @@ class ApiController < ApplicationController
     result.push(lyrics_word.join(" ").html_safe, valid_words)
 
     return result
-    
+
   end
 end
