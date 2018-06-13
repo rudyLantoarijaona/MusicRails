@@ -1,10 +1,8 @@
-class User < ApplicationRecord
-  has_one :stats
+class Stat < ApplicationRecord
   scope :short_name, ->{where('lenght(name) < 10')}
-  
 
   def explicit_name
-      "user '#{name}'"
+      "stat '#{name}'"
   end
   
 end
