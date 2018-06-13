@@ -16,3 +16,44 @@
 .songLyrics {
   white-space: pre-wrap;
 }
+
+body html{
+	margin: 0;
+	padding: 0;
+}
+
+.register{
+	margin-top:25%;
+	margin-bottom:25%;
+	margin-left:0px;
+}
+
+.backgroundImg{
+background-image: url('image.jpg');
+background-size: cover;
+background-position: center center;
+background-repeat: no-repeat;
+/* top :0; */
+ position: fixed;
+ left: 0;
+ right:0;
+ min-width: 100%;
+ min-height: 100%;
+}
+
+.navbar-nav {
+  display: flex;
+  align-items: center;
+}
+.navbar-inverse .navbar-nav > li > a {
+    margin-right: 30px;
+    color:white;
+}
+
+label_tag{
+	text-align:center;
+}
+
+.btn{
+	text-align: center;
+}

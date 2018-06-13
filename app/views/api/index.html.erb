@@ -1,80 +1,76 @@
-<div>
-
-  <% if @recap %>
+<% if @recap %>
   <div>TESTTEST</div>
-  <% end %>
+<% end %>
 
-  <% if !@track %>
-  <div class="jumbotron">
+<% if !@track %>
+<div class="jumbotron">
 
-      <%= form_tag("/api", method: "get") do %>
-        <div class="form-group">
-          <%= label_tag(:q, "Recherchez un artiste pour commencer à jouer (Vous devez être connecté) :") %>
-          <%= text_field_tag(:q, "", class: "form-control") %>
-        </div>
-        <div class="form-group">
-          <% if user_signed_in? %>
-            <%= submit_tag("Chercher", class: "btn btn-primary btn-lg") %>
-          <% else %>
-            <%= link_to 'Chercher', new_user_session_path, class: "btn btn-primary btn-lg" %>
-          <% end %>
-        </div>
-      <% end %>
-
+  <%= form_tag("/api", method: "get") do %>
+    <div class="form-group">
+      <%= label_tag(:q, "Recherchez un artiste pour commencer à jouer (Vous devez être connecté) :") %>
+      <%= text_field_tag(:q, "", class: "form-control") %>
     </div>
-
-    <% if @songs && @songs.length>0 %>
-
-      <ul class="list-group">
-        <% @songs.each do |song| %>
-          <li class="list-group-item">
-            <a href="/api?trackId=<%=song[3]%>">
-              <div class="songItem">
-                <img src="<%= song[2] %>" alt="songCover" class="songCover">
-                <div class="songDesc">
-                  <h3><%= song[0] %></h3>
-                  <h4><%= song[1] %></h4>
-                </div>
-              </div>
-            </a>
-          </li>
-        <% end %>
-      </ul>
-    <% elsif @query != "" %>
-      <div class="alert alert-danger" role="alert">
-        Désolé, aucun résultats pour <strong><%= @query %></strong> !
-      <div>
-    <% else %>
-      <div class="alert alert-warning" role="alert">
-        Renseignez un artiste
-      </div>
-    <% end %>
-
-  <% else %>
-    <a href="/api">
-      <button type="button" name="button" class="btn btn-info">Retour</button>
-    </a>
-    <%= form_tag(controller: "api", action: "index", method: "post") do |f| %>
-      <%= hidden_field_tag("difficulty", @track[5]) %>
-      <%= hidden_field_tag("track_id", @track[6]) %>
-      <% i = 1 %>
-      <% @track[4].map do |m| %>
-        <%= hidden_field_tag("response"+i.to_s, m) %>
-        <% i += 1 %>
+    <div class="form-group">
+      <% if user_signed_in? %>
+        <%= submit_tag("Chercher", class: "btn btn-primary btn-lg") %>
+      <% else %>
+        <%= link_to 'Chercher', new_user_session_path, class: "btn btn-primary btn-lg" %>
       <% end %>
-      <p class="songLyrics">
-        <div class="songItem">
-          <img src="<%= @track[3] %>" alt="songCover" class="songCover">
-          <div class="songDesc">
-            <h2><%= @track[1] %></h2>
-            <h3><%= @track[2] %></h3>
-          </div>
-        </div>
-        <p class="songLyrics">
-          <%= @track[0] %>
-        </p>
-      </p>
-      <%= submit_tag("Confirmer", class: "btn btn-primary btn-lg") %>
-    <% end %>
+    </div>
   <% end %>
 </div>
+
+<% if @songs && @songs.length>0 %>
+
+<ul class="list-group">
+  <% @songs.each do |song| %>
+    <li class="list-group-item">
+      <a href="/api?trackId=<%=song[3]%>">
+        <div class="songItem">
+          <img src="<%= song[2] %>" alt="songCover" class="songCover">
+          <div class="songDesc">
+            <h3><%= song[0] %></h3>
+            <h4><%= song[1] %></h4>
+          </div>
+        </div>
+      </a>
+    </li>
+  <% end %>
+</ul>
+<% elsif @query != "" %>
+<div class="alert alert-danger" role="alert">
+  Désolé, aucun résultats pour <strong><%= @query %></strong> !
+</div>
+<% else %>
+<div class="alert alert-warning" role="alert">
+  Renseignez un artiste
+</div>
+<% end %>
+
+<% else %>
+<a href="/api">
+<button type="button" name="button" class="btn btn-info">Retour</button>
+</a>
+<%= form_tag(controller: "api", action: "index", method: "post") do |f| %>
+<%= hidden_field_tag("difficulty", @track[5]) %>
+<%= hidden_field_tag("track_id", @track[6]) %>
+<% i = 1 %>
+<% @track[4].map do |m| %>
+  <%= hidden_field_tag("response"+i.to_s, m) %>
+  <% i += 1 %>
+<% end %>
+<p class="songLyrics">
+  <div class="songItem">
+    <img src="<%= @track[3] %>" alt="songCover" class="songCover">
+    <div class="songDesc">
+      <h2><%= @track[1] %></h2>
+      <h3><%= @track[2] %></h3>
+    </div>
+  </div>
+  <p class="songLyrics">
+    <%= @track[0] %>
+  </p>
+</p>
+<%= submit_tag("Confirmer", class: "btn btn-primary btn-lg") %>
+<% end %>
+<% end %>
