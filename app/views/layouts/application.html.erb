@@ -14,14 +14,18 @@
 
   <body>
     <div class="container">
+      <br>
       <p>
         <% if user_signed_in? %>
-          Connecté en tant que <%= current_user.email %>
-          <%= link_to 'Se déconnecter', destroy_user_session_path, method: :delete %>
+          Bon jeu <strong><%= current_user.email %></strong> ! 
+          <%= link_to 'Se déconnecter', destroy_user_session_path, method: :delete, class: 'btn btn-default' %>
         <% else %>
-          <%= link_to 'Se connecter', new_user_session_path %>
+          <%= link_to 'Se connecter', new_user_session_path, class: 'btn btn-default' %>
+          <%= link_to 'S\'inscrire', new_user_registration_path, class: 'btn btn-default' %>
         <% end %>
+        <%= link_to 'Home', root_path, class: 'btn btn-default' %>
       </p>
+
       <%= yield %>
     </div>
   </body>

@@ -1,7 +1,21 @@
 <h1>
-  Ceci est la page d'accueil du projet
-  <%= Rails.application.class.parent_name %> !
+  Bienvenue sur
+  <%= Rails.application.class.parent_name %>
 </h1>
+
+  <%= form_tag("/api", method: "get") do %>
+  <div class="form-group">
+    <%= label_tag(:q, "Recherchez un artiste pour commencer à jouer :") %>
+    <%= text_field_tag(:q, "", class: "form-control") %>
+  </div>
+  <div class="form-group">
+    <% if user_signed_in? %>
+      <%= submit_tag("Chercher", class: "btn btn-primary") %>
+    <% else %>
+      <%= link_to 'Find', new_user_session_path, class: "btn btn-primary" %>
+    <% end %>
+  </div>
+  <% end %>
 
 
 <table class="table">
@@ -13,7 +27,5 @@
       </tr>
     </thread>
     <tbody>
-      
-  </table>
 
- 
+  </table>
