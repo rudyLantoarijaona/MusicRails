@@ -22,12 +22,11 @@ class StatsController < ApplicationController
     end
   
     # POST /stats
-    # POST /stats.json
     def create
       @stat = Stat.new(stat_params)
   
         if @stat.save
-        redirect_to @stat, notice: "La stat a bien été créer ! " 
+        redirect_to @stat, notice: "La stat a bien été créée ! " 
         else
           render :new  
         end
