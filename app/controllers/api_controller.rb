@@ -114,7 +114,7 @@ class ApiController < ApplicationController
           Stat.create({:idUser => user.id, 
                        :nbPartyPlay => 1, 
                        :nbPartyWin => 1, 
-                       :scoreNow => points,
+                       :scoreNow => 0,
                        :scoreRecord => 0,
                        :lastAnswer => lastAnswer,
                        :lastResponse => lastResponse,
@@ -122,7 +122,7 @@ class ApiController < ApplicationController
                        :lastPoints => points})
         end
       end
-      #redirect_to controller: 'stats', action: 'create', id: 1
+      redirect_to controller: 'stats', action: 'show'
     end
   end
 

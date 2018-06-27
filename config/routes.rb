@@ -3,5 +3,6 @@ Rails.application.routes.draw do
   resources :songs
   resources :api
   root 'home#index'
+  get 'stats/show'
   get "/api" => "api#index", via: [:get, :post]
 end
