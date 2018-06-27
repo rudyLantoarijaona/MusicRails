@@ -79,9 +79,9 @@ class ApiController < ApplicationController
           record = s.scoreRecord
         end
         if points > 0
-          s.update({:idUser => user.id, 
-                    :nbPartyPlay => s.nbPartyPlay + 1, 
-                    :nbPartyWin => s.nbPartyWin + 1, 
+          s.update({:idUser => user.id,
+                    :nbPartyPlay => s.nbPartyPlay + 1,
+                    :nbPartyWin => s.nbPartyWin + 1,
                     :scoreNow => s.scoreNow + points,
                     :scoreRecord => record,
                     :lastSong => params["track_id"],
@@ -89,9 +89,9 @@ class ApiController < ApplicationController
                     :lastResponse => lastResponse,
                     :lastPoints => points})
         else
-          s.update({:idUser => user.id, 
-                    :nbPartyPlay => s.nbPartyPlay + 1, 
-                    :nbPartyWin => s.nbPartyWin, 
+          s.update({:idUser => user.id,
+                    :nbPartyPlay => s.nbPartyPlay + 1,
+                    :nbPartyWin => s.nbPartyWin,
                     :scoreNow => s.scoreNow + points,
                     :scoreRecord => record,
                     :lastSong => params["track_id"],
@@ -101,9 +101,9 @@ class ApiController < ApplicationController
         end
       else
         if points > 0
-          Stat.create({:idUser => user.id, 
-                       :nbPartyPlay => 1, 
-                       :nbPartyWin => 1, 
+          Stat.create({:idUser => user.id,
+                       :nbPartyPlay => 1,
+                       :nbPartyWin => 1,
                        :scoreNow => points,
                        :scoreRecord => points,
                        :lastAnswer => lastAnswer,
@@ -111,9 +111,9 @@ class ApiController < ApplicationController
                        :lastSong => params["track_id"],
                        :lastPoints => points})
         else
-          Stat.create({:idUser => user.id, 
-                       :nbPartyPlay => 1, 
-                       :nbPartyWin => 1, 
+          Stat.create({:idUser => user.id,
+                       :nbPartyPlay => 1,
+                       :nbPartyWin => 1,
                        :scoreNow => 0,
                        :scoreRecord => 0,
                        :lastAnswer => lastAnswer,
@@ -132,9 +132,18 @@ class ApiController < ApplicationController
 
     endPointUrl = 'http://api.musixmatch.com/ws/1.1/';
 
-    url = endPointUrl + 'track.search?apikey=03d5f80e88e40ca17ea9d78f326c84ee&q_artist=' + artistName + '&page_size=3&page=1&s_track_rating=desc';
+    url = endPointUrl + 'track.search?apikey=03d5f80e88e40ca17ea9d78f326c84ee&q_artist=' + artistName + '&page_size=30&page=1&s_track_rating=desc';
     response = HTTParty.get(url)
-    return JSON.parse(response.parsed_response)["message"]["body"]["track_list"]
+    tracksList = JSON.parse(response.parsed_response)["message"]["body"]["track_list"]
+    resultTracks = Array.new
+    i = 0
+    while i < 3  do
+       rand = rand(tracksList.length)
+       resultTracks.push(tracksList[rand])
+       tracksList.delete_at(rand)
+       i +=1
+    end
+    return resultTracks
   end
 
   def getLyricsgById(idTrack)
